@@ -11,7 +11,14 @@ if (!publicUrl) {
 	throw new Error('No public url provided');
 }
 
+const mongoConnectionString = process.env.MONGO_CONNECTION_STRING;
+if (!mongoConnectionString) {
+	throw new Error('No connection string provided');
+}
+
 export const config = {
 	botToken,
-	publicUrl
+	publicUrl,
+	mongoConnectionString,
+	dbName: 'webdumpbot'
 };
