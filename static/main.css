@@ -1,0 +1,54 @@
+html {
+	box-sizing: border-box;
+	font-size: 16px;
+	background-color: var(--tg-theme-bg-color);
+	background-color: var(--tg-theme-secondary-bg-color);
+	color: var(--tg-theme-text-color);
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+}
+
+ol,
+ul {
+	list-style: none;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* 
+bg_color	String	Optional. Background color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-bg-color).
+text_color	String	Optional. Main text color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-text-color).
+hint_color	String	Optional. Hint text color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-hint-color).
+link_color	String	Optional. Link color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-link-color).
+button_color	String	Optional. Button color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-button-color).
+button_text_color	String	Optional. Button text color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-button-text-color).
+secondary_bg_color	String	Optional. Bot API 6.1+ Secondary background color in the #RRGGBB format.
+Also available as the CSS variable var(--tg-theme-secondary-bg-color). */
