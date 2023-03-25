@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
-import { config } from '../../../../../../../../Users/pavelglushkov/projects/webmetabot/src/config';
+import { config } from '../../../config';
 import type { RequestHandler } from './$types';
 import * as S from '@effect/schema/Schema';
 import * as E from '@effect/data/Either';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 import type { TelegramWebApps } from '../../../tg';
-import { getDb } from '../../../../../../../../Users/pavelglushkov/projects/webmetabot/src/mongo';
+import { getDb } from '../../../mongo';
 const { createHmac } = await import('node:crypto');
 
 type A = TelegramWebApps.WebAppInitData;
