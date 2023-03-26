@@ -1,23 +1,24 @@
 import * as E from '@effect/data/Either';
 import * as S from '@effect/schema/Schema';
 import { WebAppInitData } from '../model';
-import { config } from '../config';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 const { createHmac } = await import('node:crypto');
 
 /**
  * It takes a initData string, decodes it, checks the hash, and then parses it into a WebAppInitData type
  * @param {string} telegramInitData - The data string that was passed to the web app.
+ * @param {string} botToken – Telegram bot token used for data integrity check
  * @returns Either<string, WebAppInitData>
  *
  * Source: https://gist.github.com/konstantin24121/49da5d8023532d66cc4db1136435a885
  */
 export const verifyTelegramWebAppData = (
-	telegramInitData: string
+	telegramInitData: string,
+	botToken: string
 ): E.Either<string, WebAppInitData> => {
 	const encoded = decodeURIComponent(telegramInitData);
 
-	const secret = createHmac('sha256', 'WebAppData').update(config.botToken);
+	const secret = createHmac('sha256', 'WebAppData').update(botToken);
 
 	const arr = encoded.split('&');
 	const hashIndex = arr.findIndex((str) => str.startsWith('hash='));

@@ -1,7 +1,7 @@
 import { Bot } from 'grammy';
 import type { Chat as TgChat } from 'grammy/types';
-import { config } from './config';
-import { getDb } from './mongo';
+import { config } from './config.server';
+import { getDb } from './mongo.server';
 import * as S from '@effect/schema/Schema';
 import { Entry } from './model';
 
