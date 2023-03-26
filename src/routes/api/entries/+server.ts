@@ -1,20 +1,14 @@
-import * as S from '@effect/schema/Schema';
 import * as Effect from '@effect/io/Effect';
 import { pipe } from '@effect/data/Function';
-import { entriesByChatId } from '../../../mongo';
-import { createHandler } from '../../../utils/requestHandler';
-import { Entry } from '../../../model';
+import { entriesByChatId, getDb } from '../../../mongo';
+import { createEndpoint } from '../../../utils/requestHandler';
 import { verifyTelegramWebAppData } from '../../../utils/tgWebAppData';
+import { entries } from '../../../endpoint';
 
-export const POST = createHandler(
-	S.struct({
-		initData: S.string
-	}),
-	S.array(Entry),
-	({ initData }) =>
-		pipe(
-			verifyTelegramWebAppData(initData),
-			Effect.fromEither,
-			Effect.flatMap(({ user }) => entriesByChatId(user.id))
-		)
+export const POST = createEndpoint(entries, ({ initData }) =>
+	pipe(
+		verifyTelegramWebAppData(initData),
+		Effect.fromEither,
+		Effect.flatMap(({ user }) => entriesByChatId(user.id))
+	)
 );

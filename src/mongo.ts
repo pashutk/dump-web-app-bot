@@ -22,8 +22,8 @@ export const getDb = () => getConnection().then((c) => c.db(config.dbName));
 
 const getDbE = () => Effect.attemptCatchPromise(getDb, (reason) => 'Failed to get db connection');
 
-export const entriesByChatId = (chatId: number): Effect.Effect<never, string, readonly Entry[]> =>
-	pipe(
+export const entriesByChatId = (chatId: number): Effect.Effect<never, string, readonly Entry[]> => {
+	return pipe(
 		getDbE(),
 		Effect.flatMap((db) =>
 			Effect.attemptCatchPromise(
@@ -33,9 +33,9 @@ export const entriesByChatId = (chatId: number): Effect.Effect<never, string, re
 		),
 		Effect.flatMap((docs) =>
 			pipe(
-				docs,
-				S.parseEffect(S.array(Entry)),
+				S.parseEffect(S.array(Entry))(docs, { isUnexpectedAllowed: true }),
 				Effect.mapError((err) => `Failed to parse db entries: ` + formatErrors(err.errors))
 			)
 		)
 	);
+};

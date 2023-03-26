@@ -4,6 +4,7 @@ import * as Effect from '@effect/io/Effect';
 import { pipe } from '@effect/data/Function';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 import { json } from '@sveltejs/kit';
+import type { Endpoint } from '../endpoint';
 
 export const createHandler =
 	<
@@ -34,3 +35,8 @@ export const createHandler =
 
 		return Effect.runPromiseEither(effect).then(json);
 	};
+
+export const createEndpoint = <IFrom, OFrom, ITo = IFrom, OTo = OFrom>(
+	{ input, output }: Endpoint<IFrom, OFrom, ITo, OTo>,
+	handler: (input: ITo) => Effect.Effect<never, string, OTo>
+) => createHandler(input, output, handler);

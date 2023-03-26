@@ -2,6 +2,8 @@ import { Bot } from 'grammy';
 import type { Chat as TgChat } from 'grammy/types';
 import { config } from './config';
 import { getDb } from './mongo';
+import * as S from '@effect/schema/Schema';
+import { Entry } from './model';
 
 type Chat = {
 	tgchat: TgChat;
@@ -24,14 +26,15 @@ const saveChat = async (tgchat: TgChat) => {
 
 const saveEntry = async (chatId: number, text: string, raw: unknown) => {
 	const db = await getDb();
-	const now = Date.now();
-	await db.collection('entries').insertOne({
-		chatId,
-		text,
-		raw,
-		createdAt: now,
-		id: crypto.randomUUID()
-	});
+	await db.collection('entries').insertOne(
+		S.encode(Entry)({
+			chatId,
+			text,
+			raw: raw as S.Json,
+			createdAt: new Date(),
+			id: crypto.randomUUID()
+		})
+	);
 };
 
 const bot = new Bot(config.botToken);
