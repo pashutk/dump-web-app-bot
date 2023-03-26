@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { TelegramWebApps } from '../tg';
 	import * as E from '@effect/data/Either';
-	import { entries, type Endpoint } from '../endpoint';
+	import { entries, type Endpoint } from '$lib/endpoint';
 	import * as Effect from '@effect/io/Effect';
 	import * as S from '@effect/schema/Schema';
 	import { pipe } from '@effect/data/Function';

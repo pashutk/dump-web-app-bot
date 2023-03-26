@@ -1,4 +1,4 @@
 import { webhookCallback } from 'grammy';
-import { bot } from '../../bot';
+import { bot } from '$lib/server/bot';
 
 export const POST = webhookCallback(bot, 'sveltekit');

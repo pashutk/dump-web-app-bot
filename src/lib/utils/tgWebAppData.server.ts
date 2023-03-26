@@ -1,6 +1,6 @@
 import * as E from '@effect/data/Either';
 import * as S from '@effect/schema/Schema';
-import { WebAppInitData } from '../model';
+import { WebAppInitData } from '$lib/model';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 const { createHmac } = await import('node:crypto');
 

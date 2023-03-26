@@ -4,7 +4,7 @@ import * as Effect from '@effect/io/Effect';
 import { pipe } from '@effect/data/Function';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 import { json } from '@sveltejs/kit';
-import type { Endpoint } from '../endpoint';
+import type { Endpoint } from '$lib/endpoint';
 
 /**
  * It takes a Schema of the input, a Schema of the output, and a function that takes the

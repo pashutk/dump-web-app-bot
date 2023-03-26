@@ -3,8 +3,8 @@ import * as Effect from '@effect/io/Effect';
 import * as S from '@effect/schema/Schema';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 import { MongoClient } from 'mongodb';
-import { config } from './config.server';
-import { Entry } from './model';
+import { config } from '$lib/server/config';
+import { Entry } from '$lib/model';
 
 /* It's creating a new MongoClient object. */
 const client = new MongoClient(config.mongoConnectionString);

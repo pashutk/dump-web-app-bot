@@ -1,5 +1,5 @@
 import * as S from '@effect/schema/Schema';
-import { Entry } from './model';
+import { Entry } from '$lib/model';
 
 /**
  * `Endpoint` is a type that describes a function that takes an input of type `IFrom` and returns an

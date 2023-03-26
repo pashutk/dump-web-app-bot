@@ -1,9 +1,9 @@
 import { Bot } from 'grammy';
 import type { Chat as TgChat } from 'grammy/types';
-import { config } from './config.server';
-import { getDb } from './mongo.server';
+import { config } from '$lib/server/config';
+import { getDb } from '$lib/server/mongo';
 import * as S from '@effect/schema/Schema';
-import { Entry } from './model';
+import { Entry } from '$lib/model';
 
 /**
  * `Chat` is an object with three properties: `tgchat`, `createdAtMs`, and `updatedAt`.
