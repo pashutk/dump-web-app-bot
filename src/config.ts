@@ -16,6 +16,7 @@ if (!mongoConnectionString) {
 	throw new Error('No connection string provided');
 }
 
+/* Exporting the config object. */
 export const config = {
 	botToken,
 	publicUrl,

@@ -5,12 +5,22 @@ import { getDb } from './mongo';
 import * as S from '@effect/schema/Schema';
 import { Entry } from './model';
 
+/**
+ * `Chat` is an object with three properties: `tgchat`, `createdAtMs`, and `updatedAt`.
+ * @property {TgChat} tgchat - The chat object from the Telegram API.
+ * @property {number} createdAtMs - The time when the chat was created.
+ * @property {number} updatedAt - The last time the chat was updated.
+ */
 type Chat = {
 	tgchat: TgChat;
 	createdAtMs: number;
 	updatedAt: number;
 };
 
+/**
+ * It saves a chat to the database
+ * @param {TgChat} tgchat - TgChat - the chat object from Telegram
+ */
 const saveChat = async (tgchat: TgChat) => {
 	const db = await getDb();
 	const now = Date.now();
@@ -24,6 +34,12 @@ const saveChat = async (tgchat: TgChat) => {
 	);
 };
 
+/**
+ * It takes a chat ID, an entry text, and a raw value, and saves it to the database
+ * @param {number} chatId - number - the chat id of the chat where the entry was posted
+ * @param {string} text - The text of the message
+ * @param {unknown} raw - unknown
+ */
 const saveEntry = async (chatId: number, text: string, raw: unknown) => {
 	const db = await getDb();
 	await db.collection('entries').insertOne(

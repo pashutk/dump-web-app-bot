@@ -5,7 +5,13 @@ import { config } from '../config';
 import { formatErrors } from '@effect/schema/TreeFormatter';
 const { createHmac } = await import('node:crypto');
 
-/** Source: https://gist.github.com/konstantin24121/49da5d8023532d66cc4db1136435a885  */
+/**
+ * It takes a initData string, decodes it, checks the hash, and then parses it into a WebAppInitData type
+ * @param {string} telegramInitData - The data string that was passed to the web app.
+ * @returns Either<string, WebAppInitData>
+ *
+ * Source: https://gist.github.com/konstantin24121/49da5d8023532d66cc4db1136435a885
+ */
 export const verifyTelegramWebAppData = (
 	telegramInitData: string
 ): E.Either<string, WebAppInitData> => {
