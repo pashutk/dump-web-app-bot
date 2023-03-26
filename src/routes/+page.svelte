@@ -6,6 +6,8 @@
 	import * as Effect from '@effect/io/Effect';
 	import * as S from '@effect/schema/Schema';
 	import { pipe } from '@effect/data/Function';
+	import { autoFetchable, remoteData } from '$lib/stores';
+	import Rd from './rd.svelte';
 
 	const fetchPromise =
 		<I1, O1, I2, O2>(path: string, endpoint: Endpoint<I1, O1, I2, O2>) =>
@@ -19,65 +21,44 @@
 				}
 			}).then((a) => a.json());
 
-	const fetchEndpoint =
-		<I1, O1, I2, O2>(path: string, endpoint: Endpoint<I1, O1, I2, O2>) =>
-		(input: I2): Effect.Effect<never, string, E.Either<string, O2>> => {
-			return pipe(
-				Effect.attemptCatchPromise(
-					() => fetchPromise(path, endpoint)(input),
-					(reason) => `Failed to fetch ${path}`
-				)
-			);
-		};
-
-	const fetcher = fetchPromise('/api/entries', entries);
-
-	type AsyncData<E, A> =
-		| {
-				type: 'idle';
-		  }
-		| {
-				type: 'loading';
-		  }
-		| {
-				type: 'loaded';
-				data: A;
-		  }
-		| {
-				type: 'error';
-				data: E;
-		  };
-
 	const start = Date.now();
 
 	let app: TelegramWebApps.WebApp | null = null;
 
-	let a: E.Either<string, readonly any[]> = E.right([]);
+	let rd = remoteData();
 
-	let diff = 0;
-	onMount(async () => {
+	onMount(() => {
 		app = Telegram.WebApp;
 
-		diff = Date.now() - start;
 		Telegram.WebApp.ready();
 
 		const initData = app.initData;
 
-		const data = await fetcher({ initData });
-
-		a = data;
+		fetchPromise(
+			'/api/entries',
+			entries
+		)({ initData }).then(
+			E.match(
+				(error) => rd.set({ type: 'error', error }),
+				(data) => rd.set({ type: 'loaded', data })
+			)
+		);
 	});
 
-	$: r = pipe(
-		a,
-		E.match(
-			(err) => `Error: ${err}`,
-			(d) => d.map((a) => a.text).join('\n')
-		)
-	);
+	$: g =
+		$rd.type === 'loading'
+			? new Promise(() => {})
+			: $rd.type === 'error'
+			? Promise.reject($rd.error)
+			: Promise.resolve($rd.data);
 </script>
 
 <h1>Welcome</h1>
-<!-- <pre>{JSON.stringify(a, null, 2)}</pre> -->
-<pre>{r}</pre>
-<!-- <pre>{entries.type === 'loaded' ? entries.data.map((a) => a.text).join('\n') : 'Loading'}</pre> -->
+<pre>{$rd.type}</pre>
+{#await g}
+	Loading
+{:then data}
+	{JSON.stringify(data)}
+{:catch err}
+	Error: {err.toString()}
+{/await}
