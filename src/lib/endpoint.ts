@@ -39,3 +39,10 @@ export const entries = endpoint(
 	}),
 	S.array(Entry)
 );
+
+export const preview = endpoint(
+	S.struct({
+		url: S.string
+	}),
+	S.void
+);
