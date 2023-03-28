@@ -45,7 +45,7 @@ export const fetchEndpoint =
 				() => fetchPromise(path, endpoint)(input),
 				(reason) => `Failed to fetch ${path}`
 			),
-			Effect.flatMap(Effect.fromEither)
+			Effect.absolve
 		);
 	};
 
