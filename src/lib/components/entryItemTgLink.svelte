@@ -5,12 +5,11 @@
 
 	export let data: Entry;
 
+	let id = data.text.slice('https://t.me/'.length);
+
 	let x = writable<any>(null);
 	onMount(async () => {
-		const result = await fetch('/api/preview', {
-			method: 'POST',
-			body: JSON.stringify({ url: data.text })
-		}).then((a) => a.json());
+		const result = await fetch('/api/preview?id=' + id).then((a) => a.json());
 		x.set(result);
 	});
 
