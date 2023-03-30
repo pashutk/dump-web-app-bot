@@ -22,7 +22,7 @@
 	on:click={() => {
 		Telegram.WebApp.openTelegramLink(data.text);
 	}}
-	class="gap-4 bg-tg-bg p-4 rounded-md flex flex-row items-center"
+	class="gap-4 bg-tg-bg p-4 rounded-md flex flex-row items-center w-full"
 >
 	{#if $x}
 		<div class="h-10 w-10">
